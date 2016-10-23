@@ -41,13 +41,7 @@ public class Reminder {
     }
 
     public Reminder(String Title, String Date, String Time, String Repeat, String RepeatNo, String RepeatType, String Active){
-        mTitle = Title;
-        mDate = Date;
-        mTime = Time;
-        mRepeat = Repeat;
-        mRepeatNo = RepeatNo;
-        mRepeatType = RepeatType;
-        mActive = Active;
+        this(0, Title, Date, Time, Repeat, RepeatNo, RepeatType, Active);
     }
 
     public Reminder(){}
