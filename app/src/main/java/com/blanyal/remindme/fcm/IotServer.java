@@ -39,10 +39,6 @@ public class IotServer {
         this.preferences.edit().putBoolean("registered", registered).apply();
     }
 
-    public boolean isRegistered() {
-        return this.preferences.getBoolean("registered", false);
-    }
-
     public String token() {
         return preferences.getString("token", "");
     }

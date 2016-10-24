@@ -42,17 +42,13 @@ public class MessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage.Notification notification, Map<String, String> data) {
-        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        saveReminder(notification);
 
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        Bundle bundle = new Bundle();
-        //bundle.putString("picture_url", data.get("picture_url"));
-        intent.putExtras(bundle);
-
         PendingIntent pendingIntent = PendingIntent.getActivity(this, Activity.RESULT_OK, intent, PendingIntent.FLAG_ONE_SHOT);
-        //intent.putExtra(MainActivity.TODOITEM, getTodoItem(notification));
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notification.getTitle())
@@ -84,7 +80,7 @@ public class MessagingService extends FirebaseMessagingService {
         notificationManager.notify(0, notificationBuilder.build());
     }
 
-    public Reminder getReminder(RemoteMessage.Notification notification) {
+    public void saveReminder(RemoteMessage.Notification notification) {
         Reminder reminder = new Reminder();
         reminder.setActive(Boolean.TRUE.toString());
         reminder.setRepeat(Boolean.FALSE.toString());
@@ -105,7 +101,5 @@ public class MessagingService extends FirebaseMessagingService {
 
         ReminderDatabase database = new ReminderDatabase(this);
         database.addReminder(reminder);
-
-        return null;
     }
 }
