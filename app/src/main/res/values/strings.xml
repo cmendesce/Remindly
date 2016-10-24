@@ -21,6 +21,7 @@
     <string name="title_activity_add_reminder">Add Reminder</string>
     <string name="title_activity_edit_reminder">Edit Reminder</string>
     <string name="title_activity_licenses">Licenses</string>
+    <string name="title_menu_sync">Sync</string>
 
     <string name="add_reminder">Reminder</string>
     <string name="details">Details</string>

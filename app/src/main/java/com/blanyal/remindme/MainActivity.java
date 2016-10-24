@@ -38,6 +38,8 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
 import com.bignerdranch.android.multiselector.MultiSelector;
 import com.bignerdranch.android.multiselector.SwappingHolder;
+import com.blanyal.remindme.fcm.IotServer;
+import com.blanyal.remindme.fcm.UserInfo;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -246,7 +248,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, LicencesActivity.class);
                 startActivity(intent);
                 return true;
-
+            case R.id.action_menu_sync:
+                final UserInfo userInfo = new UserInfo(this);
+                final IotServer server = new IotServer(this);
+                server.register(userInfo.email(), server.token());
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

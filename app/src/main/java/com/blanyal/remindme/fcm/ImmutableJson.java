@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * Created by carlosmendes on 10/23/16.
  */
 public class ImmutableJson {
-    public static JSONObject object(String... params) {
+    public static String jsonString(String... params) {
         JSONObject json = new JSONObject();
 
         for (int i = 0; i < params.length - 1; i++) {
@@ -21,6 +21,6 @@ public class ImmutableJson {
             i++;
         }
 
-        return json;
+        return json.toString();
     }
 }

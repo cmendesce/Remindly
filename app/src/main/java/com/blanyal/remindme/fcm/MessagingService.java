@@ -23,6 +23,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -34,13 +35,9 @@ public class MessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        // TODO(developer): Handle FCM messages here.
-        // If the application is in the foreground handle both data and notification messages here.
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         Map<String, String> data = remoteMessage.getData();
-        Log.e("FROM", remoteMessage.getFrom());
+        Log.d("Message receive from", remoteMessage.getFrom());
         sendNotification(notification, data);
     }
 
@@ -87,8 +84,25 @@ public class MessagingService extends FirebaseMessagingService {
         notificationManager.notify(0, notificationBuilder.build());
     }
 
-    public Reminder getTodoItem(RemoteMessage.Notification notification) {
+    public Reminder getReminder(RemoteMessage.Notification notification) {
         Reminder reminder = new Reminder();
+        reminder.setActive(Boolean.TRUE.toString());
+        reminder.setRepeat(Boolean.FALSE.toString());
+        reminder.setTitle(notification.getTitle() + notification.getBody());
+
+        Calendar calendar = Calendar.getInstance();
+        String sDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR);
+        String sTime;
+        int minute = calendar.get(Calendar.MINUTE);
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        if (minute < 10) {
+            sTime = hourOfDay + ":" + "0" + minute;
+        } else {
+            sTime = hourOfDay + ":" + minute;
+        }
+        reminder.setDate(sDate);
+        reminder.setTime(sTime);
+
         ReminderDatabase database = new ReminderDatabase(this);
         database.addReminder(reminder);
 
